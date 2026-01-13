@@ -14,7 +14,202 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          detected_emotion: Database["public"]["Enums"]["emotion_type"] | null
+          id: string
+          is_crisis_flagged: boolean | null
+          role: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          detected_emotion?: Database["public"]["Enums"]["emotion_type"] | null
+          id?: string
+          is_crisis_flagged?: boolean | null
+          role: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          detected_emotion?: Database["public"]["Enums"]["emotion_type"] | null
+          id?: string
+          is_crisis_flagged?: boolean | null
+          role?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "chat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_sessions: {
+        Row: {
+          detected_emotions: string[] | null
+          ended_at: string | null
+          id: string
+          started_at: string
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          detected_emotions?: string[] | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          detected_emotions?: string[] | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      crisis_logs: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string | null
+          response_given: string | null
+          severity: string | null
+          trigger_phrase: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          response_given?: string | null
+          severity?: string | null
+          trigger_phrase?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          response_given?: string | null
+          severity?: string | null
+          trigger_phrase?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crisis_logs_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "chat_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mood_entries: {
+        Row: {
+          created_at: string
+          emoji: string
+          emotion: Database["public"]["Enums"]["emotion_type"]
+          id: string
+          intensity: number
+          journal_note: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emoji: string
+          emotion: Database["public"]["Enums"]["emotion_type"]
+          id?: string
+          intensity: number
+          journal_note?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          emotion?: Database["public"]["Enums"]["emotion_type"]
+          id?: string
+          intensity?: number
+          journal_note?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wellness_recommendations: {
+        Row: {
+          based_on_emotion: Database["public"]["Enums"]["emotion_type"] | null
+          completed: boolean | null
+          created_at: string
+          description: string
+          id: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          based_on_emotion?: Database["public"]["Enums"]["emotion_type"] | null
+          completed?: boolean | null
+          created_at?: string
+          description: string
+          id?: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          based_on_emotion?: Database["public"]["Enums"]["emotion_type"] | null
+          completed?: boolean | null
+          created_at?: string
+          description?: string
+          id?: string
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +218,18 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      emotion_type:
+        | "happy"
+        | "calm"
+        | "anxious"
+        | "sad"
+        | "stressed"
+        | "angry"
+        | "lonely"
+        | "hopeful"
+        | "neutral"
+        | "overwhelmed"
+      intensity_level: "low" | "medium" | "high"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +356,20 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      emotion_type: [
+        "happy",
+        "calm",
+        "anxious",
+        "sad",
+        "stressed",
+        "angry",
+        "lonely",
+        "hopeful",
+        "neutral",
+        "overwhelmed",
+      ],
+      intensity_level: ["low", "medium", "high"],
+    },
   },
 } as const
