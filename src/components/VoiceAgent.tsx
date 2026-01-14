@@ -4,12 +4,19 @@ import { Mic, MicOff, Volume2, VolumeX, MessageCircle, Sparkles } from 'lucide-r
 import { Button } from '@/components/ui/button';
 import { LumaraMascot } from './LumaraMascot';
 
-// Type declarations for Web Speech API
-declare global {
-  interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
-  }
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionInstance extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start: () => void;
+  stop: () => void;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
 }
 
 interface VoiceAgentProps {
@@ -41,42 +48,49 @@ export const VoiceAgent = ({ onMessage }: VoiceAgentProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [currentText, setCurrentText] = useState('');
   const [mascotEmotion, setMascotEmotion] = useState<'happy' | 'calm' | 'listening' | 'thinking'>('calm');
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
 
   useEffect(() => {
     const greeting = greetings[Math.floor(Math.random() * greetings.length)];
     setTimeout(() => speakText(greeting), 1000);
 
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognitionClass = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognitionClass();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = true;
-      recognitionRef.current.lang = 'en-US';
+    const windowWithSpeech = window as Window & { 
+      SpeechRecognition?: new () => SpeechRecognitionInstance;
+      webkitSpeechRecognition?: new () => SpeechRecognitionInstance;
+    };
 
-      recognitionRef.current.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map(result => result[0].transcript)
-          .join('');
-        setCurrentText(transcript);
-      };
+    if (windowWithSpeech.webkitSpeechRecognition || windowWithSpeech.SpeechRecognition) {
+      const SpeechRecognitionClass = windowWithSpeech.SpeechRecognition || windowWithSpeech.webkitSpeechRecognition;
+      if (SpeechRecognitionClass) {
+        recognitionRef.current = new SpeechRecognitionClass();
+        recognitionRef.current.continuous = false;
+        recognitionRef.current.interimResults = true;
+        recognitionRef.current.lang = 'en-US';
 
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-        setMascotEmotion('thinking');
-        if (currentText) {
-          setTimeout(() => {
-            const response = affirmations[Math.floor(Math.random() * affirmations.length)];
-            speakText(response);
-            onMessage?.(currentText);
-          }, 500);
-        }
-      };
+        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+          const transcript = Array.from(event.results)
+            .map(result => result[0].transcript)
+            .join('');
+          setCurrentText(transcript);
+        };
 
-      recognitionRef.current.onerror = () => {
-        setIsListening(false);
-        setMascotEmotion('calm');
-      };
+        recognitionRef.current.onend = () => {
+          setIsListening(false);
+          setMascotEmotion('thinking');
+          if (currentText) {
+            setTimeout(() => {
+              const response = affirmations[Math.floor(Math.random() * affirmations.length)];
+              speakText(response);
+              onMessage?.(currentText);
+            }, 500);
+          }
+        };
+
+        recognitionRef.current.onerror = () => {
+          setIsListening(false);
+          setMascotEmotion('calm');
+        };
+      }
     }
 
     return () => {
