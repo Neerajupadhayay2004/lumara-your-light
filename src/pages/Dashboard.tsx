@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home, MessageCircle, Heart, Music, Sparkles, Flame, Gamepad2, Wind, 
-  BarChart3, Mic, Moon, Sun, Menu, X, ChevronRight
+  BarChart3, Mic, Moon, BookOpen, Settings, Menu, X, ChevronRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -12,12 +12,19 @@ import { MoodChart } from '@/components/MoodChart';
 import { MusicPlayer } from '@/components/MusicPlayer';
 import { MeditationGuide } from '@/components/MeditationGuide';
 import { YogaGuide } from '@/components/YogaGuide';
-import { RelaxationGames } from '@/components/RelaxationGames';
+import { MoreGames } from '@/components/MoreGames';
 import { VoiceAgent } from '@/components/VoiceAgent';
 import { BreathingExercise } from '@/components/BreathingExercise';
+import { WelcomeBot } from '@/components/WelcomeBot';
+import { SleepStories } from '@/components/SleepStories';
+import { DailyAffirmations } from '@/components/DailyAffirmations';
+import { JournalEntry } from '@/components/JournalEntry';
+import { SettingsPanel } from '@/components/SettingsPanel';
+import { Visualizer3D } from '@/components/Visualizer3D';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 
-type TabType = 'overview' | 'mood' | 'insights' | 'music' | 'meditation' | 'yoga' | 'games' | 'breathing' | 'voice';
+type TabType = 'overview' | 'mood' | 'insights' | 'music' | 'meditation' | 'yoga' | 'games' | 'breathing' | 'voice' | 'journal' | 'stories' | 'affirmations';
 
 interface NavItem {
   id: TabType;
@@ -35,7 +42,10 @@ const navItems: NavItem[] = [
   { id: 'yoga', label: 'Yoga', icon: <Flame className="w-5 h-5" />, color: 'from-orange-400 to-red-500' },
   { id: 'games', label: 'Games', icon: <Gamepad2 className="w-5 h-5" />, color: 'from-cyan-400 to-teal-500' },
   { id: 'breathing', label: 'Breathe', icon: <Wind className="w-5 h-5" />, color: 'from-sky-400 to-blue-500' },
-  { id: 'voice', label: 'Voice', icon: <Mic className="w-5 h-5" />, color: 'from-pink-400 to-rose-500' },
+  { id: 'voice', label: 'Voice AI', icon: <Mic className="w-5 h-5" />, color: 'from-pink-400 to-rose-500' },
+  { id: 'journal', label: 'Journal', icon: <BookOpen className="w-5 h-5" />, color: 'from-amber-400 to-yellow-500' },
+  { id: 'stories', label: 'Sleep Stories', icon: <Moon className="w-5 h-5" />, color: 'from-indigo-400 to-purple-500' },
+  { id: 'affirmations', label: 'Affirmations', icon: <Sparkles className="w-5 h-5" />, color: 'from-rose-400 to-pink-500' },
 ];
 
 const demoMoodEntries = [
@@ -64,9 +74,22 @@ const QuickActionCard = ({ item, onClick }: { item: NavItem; onClick: () => void
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [moodEntries, setMoodEntries] = useState(demoMoodEntries);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem('lumara_welcomed');
+    if (hasSeenWelcome) setShowWelcome(false);
+  }, []);
+
+  const handleCloseWelcome = () => {
+    setShowWelcome(false);
+    localStorage.setItem('lumara_welcomed', 'true');
+  };
 
   const handleMoodSubmit = (data: { emoji: string; emotion: string; intensity: number; journalNote?: string }) => {
     const newEntry = {
