@@ -202,6 +202,12 @@ const Dashboard = () => {
         return <BreathingExercise />;
       case 'voice':
         return <VoiceAgent />;
+      case 'journal':
+        return <JournalEntry />;
+      case 'stories':
+        return <SleepStories />;
+      case 'affirmations':
+        return <DailyAffirmations />;
       default:
         return null;
     }

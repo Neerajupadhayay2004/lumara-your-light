@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 interface LumaraMascotProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  emotion?: 'happy' | 'calm' | 'listening' | 'thinking';
+  emotion?: 'happy' | 'calm' | 'listening' | 'thinking' | 'speaking' | 'concerned';
   className?: string;
 }
 
@@ -21,6 +21,8 @@ export const LumaraMascot = ({ size = 'md', emotion = 'happy', className = '' }:
     calm: { scaleY: 0.8, y: 2 },
     listening: { scaleY: 1.1, y: -2 },
     thinking: { scaleY: 0.6, y: 3 },
+    speaking: { scaleY: 1, y: -1 },
+    concerned: { scaleY: 0.7, y: 1 },
   };
 
   const bodyVariants = {
@@ -28,6 +30,8 @@ export const LumaraMascot = ({ size = 'md', emotion = 'happy', className = '' }:
     calm: { scale: 0.98, rotate: 0 },
     listening: { scale: 1.02, rotate: -2 },
     thinking: { scale: 1, rotate: 2 },
+    speaking: { scale: 1.02, rotate: 0 },
+    concerned: { scale: 0.97, rotate: -1 },
   };
 
   return (
@@ -203,6 +207,10 @@ export const LumaraMascot = ({ size = 'md', emotion = 'happy', className = '' }:
               ? "M 85 82 Q 100 95, 115 82"
               : emotion === 'thinking'
               ? "M 88 85 Q 100 88, 112 85"
+              : emotion === 'speaking'
+              ? "M 90 83 Q 100 90, 110 83"
+              : emotion === 'concerned'
+              ? "M 90 88 Q 100 82, 110 88"
               : "M 85 82 Q 100 92, 115 82"
           }}
           transition={{ duration: 0.3 }}
