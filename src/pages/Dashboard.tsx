@@ -12,7 +12,7 @@ import { MoodChart } from '@/components/MoodChart';
 import { MusicPlayer } from '@/components/MusicPlayer';
 import { MeditationGuide } from '@/components/MeditationGuide';
 import { YogaGuide } from '@/components/YogaGuide';
-import { MoreGames } from '@/components/MoreGames';
+import { RelaxationGames } from '@/components/RelaxationGames';
 import { VoiceAgent } from '@/components/VoiceAgent';
 import { BreathingExercise } from '@/components/BreathingExercise';
 import { WelcomeBot } from '@/components/WelcomeBot';
