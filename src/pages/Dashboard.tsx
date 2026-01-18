@@ -21,10 +21,11 @@ import { DailyAffirmations } from '@/components/DailyAffirmations';
 import { JournalEntry } from '@/components/JournalEntry';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { Visualizer3D } from '@/components/Visualizer3D';
+import { ImmersiveVisualizer } from '@/components/ImmersiveVisualizer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 
-type TabType = 'overview' | 'mood' | 'insights' | 'music' | 'meditation' | 'yoga' | 'games' | 'breathing' | 'voice' | 'journal' | 'stories' | 'affirmations';
+type TabType = 'overview' | 'mood' | 'insights' | 'music' | 'meditation' | 'yoga' | 'games' | 'breathing' | 'voice' | 'journal' | 'stories' | 'affirmations' | 'visualizer';
 
 interface NavItem {
   id: TabType;
@@ -35,6 +36,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { id: 'overview', label: 'Overview', icon: <Home className="w-5 h-5" />, color: 'from-amber-400 to-orange-500' },
+  { id: 'visualizer', label: 'Visualizer', icon: <Sparkles className="w-5 h-5" />, color: 'from-violet-400 to-purple-600' },
   { id: 'mood', label: 'Log Mood', icon: <Heart className="w-5 h-5" />, color: 'from-rose-400 to-pink-500' },
   { id: 'insights', label: 'Insights', icon: <BarChart3 className="w-5 h-5" />, color: 'from-blue-400 to-indigo-500' },
   { id: 'music', label: 'Sounds', icon: <Music className="w-5 h-5" />, color: 'from-green-400 to-emerald-500' },
@@ -208,6 +210,8 @@ const Dashboard = () => {
         return <SleepStories />;
       case 'affirmations':
         return <DailyAffirmations />;
+      case 'visualizer':
+        return <ImmersiveVisualizer />;
       default:
         return null;
     }
