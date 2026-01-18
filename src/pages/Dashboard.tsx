@@ -13,7 +13,7 @@ import { MusicPlayer } from '@/components/MusicPlayer';
 import { MeditationGuide } from '@/components/MeditationGuide';
 import { YogaGuide } from '@/components/YogaGuide';
 import { RelaxationGames } from '@/components/RelaxationGames';
-import { VoiceAgent } from '@/components/VoiceAgent';
+import { EnhancedVoiceAgent } from '@/components/EnhancedVoiceAgent';
 import { BreathingExercise } from '@/components/BreathingExercise';
 import { WelcomeBot } from '@/components/WelcomeBot';
 import { SleepStories } from '@/components/SleepStories';
@@ -203,7 +203,7 @@ const Dashboard = () => {
       case 'breathing':
         return <BreathingExercise />;
       case 'voice':
-        return <VoiceAgent />;
+        return <EnhancedVoiceAgent />;
       case 'journal':
         return <JournalEntry />;
       case 'stories':
