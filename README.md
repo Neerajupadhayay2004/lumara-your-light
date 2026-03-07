@@ -1,73 +1,132 @@
-# Welcome to your Lovable project
+# 🧠 Mental Health Support System
 
-## Project info
+A modern **Mental Health Support System** built to help users track their emotional well-being, receive helpful guidance, and access mental health resources in a simple and supportive environment.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+This platform focuses on **awareness, mood tracking, and AI-based support**, helping users better understand and manage their mental health.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🌟 Features
 
-**Use Lovable**
+* 😊 **Mood Tracking**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+  * Users can log and track their daily emotional state.
 
-Changes made via Lovable will be committed automatically to this repo.
+* 🧠 **Mental Health Insights**
 
-**Use your preferred IDE**
+  * Provides tips and suggestions for improving mental wellness.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+* 🤖 **Smart Guidance**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+  * Suggests relaxation techniques and coping strategies.
 
-Follow these steps:
+* 📊 **Progress Dashboard**
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+  * Visual tracking of mood patterns and emotional trends.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+* 🔐 **Secure Data Storage**
 
-# Step 3: Install the necessary dependencies.
-npm i
+  * User data is stored securely using Supabase.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+* 📱 **Responsive Design**
+
+  * Works smoothly on desktop and mobile devices.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React + TypeScript
+* **Backend / Database:** Supabase
+* **Styling:** Tailwind CSS
+* **Authentication:** Supabase Auth
+* **Tools:** Vite, Git, GitHub, VS Code
+
+---
+
+## 📂 Project Structure
+
+```
+mental-health-support
+│
+├── public
+│
+├── src
+│   ├── components
+│   │   ├── MoodTracker.tsx
+│   │   ├── MentalHealthTips.tsx
+│   │   └── ChatSupport.tsx
+│   │
+│   ├── pages
+│   │   ├── Home.tsx
+│   │   ├── Dashboard.tsx
+│   │   └── Resources.tsx
+│   │
+│   ├── services
+│   │   └── supabaseClient.ts
+│   │
+│   └── App.tsx
+│
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/yourusername/mental-health-support.git
+```
+
+### 2️⃣ Go to project folder
+
+```bash
+cd mental-health-support
+```
+
+### 3️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 4️⃣ Configure Supabase
+
+Create a `.env` file and add:
+
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_key
+```
+
+### 5️⃣ Run the project
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🔐 Supabase Features Used
 
-**Use GitHub Codespaces**
+* Supabase Authentication
+* Supabase Database
+* Real-time data updates
+* Secure API access
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 📊 Future Improvements
 
-This project is built with:
+* AI Mental Health Chatbot
+* Sentiment analysis for mood detection
+* Mental health assessment tests
+* Anonymous peer support community
+* Mobile app version
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+=
